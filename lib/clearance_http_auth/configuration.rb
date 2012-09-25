@@ -21,6 +21,15 @@ module Clearance
         @http_accept_matching = value
       end
 
+      # enable or disable http-auth bypassing without given credentials
+      # disable for User & Password input window
+      def self.bypass_auth_without_credentials
+        @bypass_auth_without_credentials ||= true
+      end
+      def self.bypass_auth_without_credentials=(value)
+        @bypass_auth_without_credentials = value
+      end
+
     end
 
   end

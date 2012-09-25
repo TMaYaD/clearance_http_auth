@@ -16,7 +16,7 @@ module Clearance
       # if the incoming request is targeting the API.
       #
       def call(env)
-        if targeting_api?(env) and env['HTTP_AUTHORIZATION']
+        if targeting_api?(env) and (env['HTTP_AUTHORIZATION'] or Configuration.bypass_auth_without_credentials == false)
           @app = Rack::Auth::Basic.new(@app) do |username, password|
             env[:clearance].sign_in ::User.authenticate(username, password)
           end
