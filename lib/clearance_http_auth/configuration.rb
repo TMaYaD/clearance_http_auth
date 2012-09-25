@@ -15,7 +15,8 @@ module Clearance
       # Some API clients will only set an Accept: header, so we can try to match
       # defined formats within this header.
       def self.http_accept_matching
-        @http_accept_matching ||= true
+        @http_accept_matching = true unless defined? @http_accept_matching
+        return @http_accept_matching
       end
       def self.http_accept_matching=(value)
         @http_accept_matching = value
@@ -24,7 +25,8 @@ module Clearance
       # enable or disable http-auth bypassing without given credentials
       # disable for User & Password input window
       def self.bypass_auth_without_credentials
-        @bypass_auth_without_credentials ||= true
+        @bypass_auth_without_credentials = true unless defined? @bypass_auth_without_credentials
+        return @bypass_auth_without_credentials
       end
       def self.bypass_auth_without_credentials=(value)
         @bypass_auth_without_credentials = value
