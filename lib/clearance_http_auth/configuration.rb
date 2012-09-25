@@ -11,6 +11,16 @@ module Clearance
       def self.api_formats
         @api_formats ||= %w[  json xml  ]
       end
+
+      # Some API clients will only set an Accept: header, so we can try to match
+      # defined formats within this header.
+      def self.http_accept_matching
+        @http_accept_matching ||= true
+      end
+      def self.http_accept_matching=(value)
+        @http_accept_matching = value
+      end
+
     end
 
   end
