@@ -22,6 +22,18 @@ module Clearance
         @http_accept_matching = value
       end
 
+      # getter/setter for the content_type_matching config setting that
+      # determines whether or not the http content-type header should be
+      # checked when determining whether a request matches the api_formats
+      # config. Defaults to true
+      def self.content_type_matching
+        @content_type_matching = true unless defined? @content_type_matching
+        return @content_type_matching
+      end
+      def self.content_type_matching=(value)
+        @content_type_matching = value
+      end
+
       # enable or disable http-auth bypassing without given credentials
       # disable for User & Password input window
       def self.bypass_auth_without_credentials
