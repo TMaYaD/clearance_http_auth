@@ -16,6 +16,7 @@ module Clearance
       # if the incoming request is targeting the API.
       #
       def call(env)
+        start_time = Time.now
         puts "=== clearance http auth:"
         puts "    env['HTTP_ACCEPT'] = #{env['HTTP_ACCEPT'].inspect}"
         puts "    env['CONTENT_TYPE'] = #{env['CONTENT_TYPE'].inspect}"
@@ -29,6 +30,7 @@ module Clearance
           @app = Rack::Auth::Basic.new(@app) do |username, password|
             result = env[:clearance].sign_in ::User.authenticate(username, password)
             puts "    sign_in = #{result}"
+            puts "    elapsed = #{"%0.5f" % (Time.now - start_time)} sec"
             result
           end
         end
