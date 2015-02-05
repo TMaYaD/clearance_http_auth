@@ -17,20 +17,20 @@ module Clearance
       #
       def call(env)
         start_time = Time.now
-        puts "=== clearance http auth:"
-        puts "    env['HTTP_ACCEPT'] = #{env['HTTP_ACCEPT'].inspect}"
-        puts "    env['CONTENT_TYPE'] = #{env['CONTENT_TYPE'].inspect}"
-        puts "    env['HTTP_AUTHORIZATION'] = #{env['HTTP_AUTHORIZATION']}"
-        puts "    targeting_api?(env) = #{targeting_api?(env)}"
+        #puts "=== clearance http auth:"
+        #puts "    env['HTTP_ACCEPT'] = #{env['HTTP_ACCEPT'].inspect}"
+        #puts "    env['CONTENT_TYPE'] = #{env['CONTENT_TYPE'].inspect}"
+        #puts "    env['HTTP_AUTHORIZATION'] = #{env['HTTP_AUTHORIZATION']}"
+        #puts "    targeting_api?(env) = #{targeting_api?(env)}"
         if targeting_api?(env) and (env['HTTP_AUTHORIZATION'] or Configuration.bypass_auth_without_credentials == false)
           if env['HTTP_ACCEPT'].nil?
             env['HTTP_ACCEPT'] = '*/*'
-            puts "    env['HTTP_ACCEPT'] = #{env['HTTP_ACCEPT'].inspect} (after targeted api nil fix)"
+            #puts "    env['HTTP_ACCEPT'] = #{env['HTTP_ACCEPT'].inspect} (after targeted api nil fix)"
           end
           @app = Rack::Auth::Basic.new(@app) do |username, password|
             result = env[:clearance].sign_in ::User.authenticate(username, password)
-            puts "    sign_in = #{result}"
-            puts "    elapsed = #{"%0.5f" % (Time.now - start_time)} sec"
+            #puts "    sign_in = #{result}"
+            #puts "    elapsed = #{"%0.5f" % (Time.now - start_time)} sec"
             result
           end
         end
