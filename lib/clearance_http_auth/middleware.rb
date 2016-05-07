@@ -21,7 +21,11 @@ module Clearance
             env['HTTP_ACCEPT'] = '*/*'
           end
           @app = Rack::Auth::Basic.new(@app) do |username, password|
-            env[:clearance].sign_in ::User.authenticate(username, password)
+            catch :success do
+              env[:clearance].sign_in ::User.authenticate(username, password) do |status|
+                throw :success, status.success?
+              end
+            end
           end
         end
         @app.call(env)
